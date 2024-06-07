@@ -23,7 +23,10 @@ tenant_url = f'https://{sharepoint_host_name}/sites/{site_name}'
 # we're running this in actions, so we'll only ever have one .md file
 local_files = glob.glob(file_path)
 
-client = GraphClient(sharepoint_token)
+def get_token():
+    return sharepoint_token
+
+client = GraphClient(get_token)
 drive = client.sites.get_by_url(tenant_url).drive.root.get_by_path(upload_path)
 
 def progress_status(offset, file_size):
