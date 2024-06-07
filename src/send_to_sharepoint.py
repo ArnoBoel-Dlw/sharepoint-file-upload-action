@@ -30,7 +30,7 @@ local_files = glob.glob(file_path)
 print(f"CREATING SITE URL")
 site_url = f'https://graph.microsoft.com/v1.0/sites/{sharepoint_host_name}:/{site_name}'
 print(f"SITE URL: {site_url}")
-drive = requests.post(site_url, headers={'Authorization': 'Bearer ' + sharepoint_token}).json()
+drive = requests.get(site_url, headers={'Authorization': 'Bearer ' + sharepoint_token}).json()
 print(f"DRIVE: {drive}")
 def progress_status(offset, file_size):
     print(f"Uploaded {offset} bytes from {file_size} bytes ... {offset/file_size*100:.2f}%")
