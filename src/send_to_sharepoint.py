@@ -3,6 +3,7 @@ import os
 import msal
 import glob
 import time
+import requests
 from office365.graph_client import GraphClient
 from office365.runtime.odata.v4.upload_session_request import UploadSessionRequest
 from office365.onedrive.driveitems.driveItem import DriveItem
@@ -23,12 +24,14 @@ tenant_url = f'https://{sharepoint_host_name}/sites/{site_name}'
 # we're running this in actions, so we'll only ever have one .md file
 local_files = glob.glob(file_path)
 
-def get_token():
-    return f'{sharepoint_token}'
+# client = GraphClient(get_token)
+# drive = client.sites.get_by_url(tenant_url).drive.root.get_by_path(upload_path)
 
-client = GraphClient(get_token)
-drive = client.sites.get_by_url(tenant_url).drive.root.get_by_path(upload_path)
-
+print(f"CREATING SITE URL")
+site_url = f'https://graph.microsoft.com/v1.0/sites/{sharepoint_host_name}:/{site_name}'
+print(f"SITE URL: {site_url}")
+drive = requests.post(tenant_url, headers={'Authorization': 'Bearer ' + sharepoint_token}).json()
+print(f"DRIVE: {drive}")
 def progress_status(offset, file_size):
     print(f"Uploaded {offset} bytes from {file_size} bytes ... {offset/file_size*100:.2f}%")
 
