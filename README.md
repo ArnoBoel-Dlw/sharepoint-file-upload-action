@@ -15,11 +15,7 @@ If your full Sharepoint upload path is `https://example.sharepoint.com/sites/myg
 - `upload_path`
   - `'reports/detailed'`
 
-The following will be provided to you by your Sharepoint administrator when you ask for a client ID. A reminder: _put secrets in **Settings/Security/Secrets and variables/Actions**_
-
-- `tenant_id`
-- `client_id`
-- `client_secret`
+Put your token in **settings/secrets/actions**\_ as SHAREPOINT_TOKEN
 
 You will also need to provide the file or files being sent:
 
@@ -44,6 +40,6 @@ jobs:
           host_name: 'your.sharepoint.com'
           site_name: 'some_site'
           upload_path: 'fake_files'
-          sharepoint_token: 'some token for sharepoint'
+          sharepoint_token: ${{ secrets.SHAREPOINT_TOKEN }}
           max_retries: 'optional, default 3'
 ```
